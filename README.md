@@ -1,4 +1,4 @@
-# Minesweeper
+# [Minesweeper](https://github.com/MiningPythonGroup/Minesweeper)
 ## Tool to analyse the sentiment of youtube comments
 
 
