@@ -2,7 +2,7 @@
 ## Tool to analyse the sentiment of youtube comments
 
 ### Authors:
-André Castro Lundin
+AndrÃ© Castro Lundin
 
 * Jakob Okkels
 
@@ -38,4 +38,5 @@ W.I.P.
 - Finish readme
 - Check all code with pep257 and flake8 at the end
 - Do UI
+- Ensure they all have docstrings
 - ...
