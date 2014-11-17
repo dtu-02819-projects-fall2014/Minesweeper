@@ -1,5 +1,6 @@
 # Minesweeper
 ## Tool to analyse the sentiment of youtube comments
+![alt text](http://upload.wikimedia.org/wikipedia/en/5/5c/Minesweeper_Icon.png "Not that kind of mine. Datamining...")
 
 ### Authors:
 * André Castro Lundin
