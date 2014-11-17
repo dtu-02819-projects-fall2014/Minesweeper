@@ -39,4 +39,5 @@ W.I.P.
 - Check all code with pep257 and flake8 at the end
 - Do UI
 - Ensure they all have docstrings
+- Add smiley analysis
 - ...
