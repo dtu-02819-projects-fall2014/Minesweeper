@@ -2,7 +2,7 @@
 ## Tool to analyse the sentiment of youtube comments
 
 ### Authors:
-André Castro Lundin
+* André Castro Lundin
 
 * Jakob Okkels
 
