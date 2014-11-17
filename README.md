@@ -41,10 +41,10 @@ mit, afinn, positivecount, negativecount = my_sent.get_sentiment_values('path_to
 
 Print the results
 
-`print "MIT score: ", mit
-print "AFINN score: ", afinn
-print "Most common positive words: ", positivecount.most_common()[:10] 
-print "Most common negative words: ", negativecount.most_common()[:10] `
+`print "MIT score: ", mit`
+`print "AFINN score: ", afinn`
+`print "Most common positive words: ", positivecount.most_common()[:10]`
+`print "Most common negative words: ", negativecount.most_common()[:10]`
 
 Returns something like:
 
