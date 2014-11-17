@@ -37,10 +37,11 @@ W.I.P.
 Demo of Sentiment analysis:
 
 `my_sent = Sentiment_analysis()
-mit, afinn, positivecount, negativecount = my_sent.get_sentiment_values('path_to_comments_file')
+mit, afinn, positivecount, negativecount = my_sent.get_sentiment_values('path_to_comments_file')`
 
-#Print the results
-print "MIT score: ", mit
+Print the results
+
+`print "MIT score: ", mit
 print "AFINN score: ", afinn
 print "Most common positive words: ", positivecount.most_common()[:10] 
 print "Most common negative words: ", negativecount.most_common()[:10] `
