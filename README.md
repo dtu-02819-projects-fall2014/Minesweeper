@@ -2,7 +2,7 @@
 ## Tool to analyse the sentiment of youtube comments
 
 
-### Authors:
+### I. Authors:
 * André Castro Lundin
 
 * Jakob Okkels
@@ -13,28 +13,28 @@ Developed for the course of:
 
 02819 Data mining using Python - Technical University of Denmark
 
-### Description:
+### II. Description:
 Classes:
 
 * `YoutubeC.py` downloads all the Youtube comments for a video
 
 * `Sentiment_analysis.py` finds the sentiment for a file with all the comments
 
-### Word lists used:
+### III. Word lists used:
 - [AFINN list](http://neuro.imm.dtu.dk/wiki/AFINN)
 
 - [MIT list](http://goo.gl/01A0iw)
 
-### Requirements:
+### IV. Requirements:
 W.I.P.
 
-### Install:
+### V. Install:
 W.I.P.
 
-### Examples:
+### VI. Examples:
 
 
-#### Demo of Sentiment analysis:
+#### 1. Demo of Sentiment analysis:
 
 `my_sent = Sentiment_analysis()`
 
@@ -60,7 +60,7 @@ Returns something like:
 
 `Most common negative words:  [(u'kill', 4), (u'bitch', 4), (u'fat', 3), (u'fire', 2), (u'dead', 2), (u'fucking', 2), (u"can't sing", 2), (u'prison', 2), (u'yuck', 1), (u'monster', 1)]`
 
-### To-do list:
+### VII. To-do list:
 - Test with pytest
 - Finish readme
 - Check all code with pep257 and flake8 at the end
