@@ -34,7 +34,7 @@ W.I.P.
 ### Examples:
 
 
-Demo of Sentiment analysis:
+#### Demo of Sentiment analysis:
 
 `my_sent = Sentiment_analysis()
 mit, afinn, positivecount, negativecount = my_sent.get_sentiment_values('path_to_comments_file')`
