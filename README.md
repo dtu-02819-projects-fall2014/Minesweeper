@@ -17,7 +17,7 @@ Classes:
 
 * `YoutubeC.py` downloads all the Youtube comments for a video
 
-* `Sentiment.py` finds the sentiment for a file with all the comments
+* `Sentiment_analysis.py` finds the sentiment for a file with all the comments
 
 ### Word lists used:
 - [AFINN list](http://neuro.imm.dtu.dk/wiki/AFINN)

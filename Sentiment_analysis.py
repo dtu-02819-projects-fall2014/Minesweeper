@@ -6,7 +6,7 @@ import json
 import simplejson
 
 
-class sentiment_analysis:
+class Sentiment_analysis:
     """Returns if a group of comments are positive, neutral or negative."""
 
     def __init__(self):
