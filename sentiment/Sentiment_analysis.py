@@ -105,7 +105,7 @@ class Sentiment_analysis:
                         if item.lower() == k:
                             if invert:
                                 total = total - i
-                                number = number + 1
+                                number += 1
                                 invert = False
                                 # print k, " inverted: ", -i #for debugging
                                 if i < 0:
@@ -113,8 +113,8 @@ class Sentiment_analysis:
                                 else:
                                     neg_list.append(word + " " + k)
                             else:
-                                total = total + i
-                                number = number + 1
+                                total += i
+                                number += 1
                                 # print k, i #for debugging
                                 if i < 0:
                                     neg_list.append(k)
@@ -126,16 +126,16 @@ class Sentiment_analysis:
                         if value < 0 and len(word) > 1:
                             neg_list.append(word)
                             total = total + value
-                            number = number + 1
+                            number += 1
                         elif value > 0 and len(word) > 1:
                             pos_list.append(word)
                             total = total + value
-                            number = number + 1
+                            number += 1
                         value = 0
                         word = ""
             if number != 0 and total != 0:
                 final = final + (total/number)
-                final_ammount = final_ammount + 1
+                final_ammount += 1
                 # print "comment score: ", total/number #for debugging
 
         for w in [pos_list]:
