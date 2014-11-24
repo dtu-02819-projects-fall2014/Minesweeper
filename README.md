@@ -25,15 +25,6 @@ Classes:
 
 - [MIT list](http://goo.gl/01A0iw)
 
-### IV. Requirements:
-W.I.P.
-
-### V. Install:
-W.I.P.
-
-### VI. Examples:
-
-
 #### 1. Demo of Sentiment analysis:
 
 `my_sent = Sentiment_analysis()`
@@ -62,7 +53,6 @@ Returns something like:
 
 ### VII. To-do list:
 - Test with pytest
-- Finish readme
 - Check all code with pep257 and flake8 at the end
 - Do UI
 - Ensure they all have docstrings
