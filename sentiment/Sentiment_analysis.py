@@ -18,7 +18,7 @@ class Sentiment_analysis:
         """ ATM just includes the description and authors."""
         self.data = []
         self.description = "Finds sentiment value"
-        self.author = "Andre, Robert, Jakob"
+        self.author = "Andre Castro"
 
     def get_word_lists(self):
         """Load sentiment word lists.
