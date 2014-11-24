@@ -1,3 +1,7 @@
+"""Contains the Sentiment_analysis class.
+
+Used for assesing the sentiment of a group of strings.
+"""
 from __future__ import division
 import re
 from collections import Counter
@@ -7,19 +11,22 @@ import simplejson
 
 
 class Sentiment_analysis:
+
     """Returns if a group of comments are positive, neutral or negative."""
 
     def __init__(self):
+        """ ATM just includes the description and authors."""
         self.data = []
         self.description = "Finds sentiment value"
         self.author = "André, Robert, Jakob"
 
     def get_word_lists(self):
-        """Loads sentiment word lists:
+        """Load sentiment word lists.
+
         - MIT List (see http://goo.gl/01A0iw)
         - AFINN List
-        Returns both lists"""
-
+        Returns both lists.
+        """
         sentimentDB = {}
         sentimentfile = json.loads(open('sentiment.json').read())
         for k, i in sentimentfile.iteritems():
@@ -36,7 +43,7 @@ class Sentiment_analysis:
         return sentimentDB, sentimentAF
 
     def open_comments(self, filename):
-        """Loads the file containing the youtube comments."""
+        """Load the file containing the youtube comments."""
         f = open(filename, 'r')
         temp1 = simplejson.load(f)
         f.close()
@@ -44,7 +51,7 @@ class Sentiment_analysis:
         return temp
 
     def tokenize(self, comments):
-        "Tokenizes the imported youtube comments"""
+        """Tokenize the imported youtube comments."""
         final = []
         token_comments = comments.split()
         stop = stopwords.words('english')
@@ -58,10 +65,12 @@ class Sentiment_analysis:
         return final
 
     def get_sentiment_value(self, comments, sentlist, pos, neg):
-        """Returns the sentiment values of a tokenized comments list
+        """Return the sentiment values of a tokenized comments list.
+
         - sentlist: word list. Ex: sentimentDB or sentimentAF
         - Comments: Tokenized comments
-        - pos, neg: Counters with most used positive and negative words"""
+        - pos, neg: Counters with most used positive and negative words.
+        """
         final = 0
         final_ammount = 0
         sentiment = 0
@@ -137,7 +146,7 @@ class Sentiment_analysis:
         return sentiment, pos, neg
 
     def get_sentiment_values(self, comment_file):
-        """Runs get_sentiment for both word lists"""
+        """Run get_sentiment for both word lists."""
         positive = Counter()
         negative = Counter()
 
