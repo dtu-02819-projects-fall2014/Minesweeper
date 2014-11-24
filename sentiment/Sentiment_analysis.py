@@ -28,13 +28,13 @@ class Sentiment_analysis:
         Returns both lists.
         """
         sentimentDB = {}
-        sentimentfile = json.loads(open('sentiment.json').read())
+        sentimentfile = json.loads(open('sentiment/sentiment.json').read())
         for k, i in sentimentfile.iteritems():
             if float(i) > 6 or float(i) < 4:
                 sentimentDB[k] = (float(i) - 5)
 
         sentimentAF = {}
-        sentimentfile2 = json.loads(open('sentimentAF.json').read())
+        sentimentfile2 = json.loads(open('sentiment/sentimentAF.json').read())
         for item in sentimentfile2:
             try:
                 sentimentAF[item[0]] = float(item[-1])
