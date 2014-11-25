@@ -20,6 +20,8 @@ Classes:
 
 * `Sentiment_analysis.py` finds the sentiment for a file with all the comments
 
+* `Emoticon_Sentiment.py` provides a binary sentiment analyzer (1 = positive, -1 = negative)
+
 ### III. Word lists used:
 - [AFINN list](http://neuro.imm.dtu.dk/wiki/AFINN)
 
@@ -56,7 +58,6 @@ Returns something like:
 - Check all code with pep257 and flake8 at the end
 - Do UI
 - Ensure they all have docstrings
-- Add smiley analysis
 - ...
 
 ![alt text](http://upload.wikimedia.org/wikipedia/en/5/5c/Minesweeper_Icon.png "Not that kind of mine. Datamining...")
