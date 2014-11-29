@@ -1,3 +1,4 @@
+#!/usr/local/bin/python
 """Contains the Sentiment_analysis class.
 
 Used for assesing the sentiment of a group of strings.
@@ -28,18 +29,21 @@ class Sentiment_analysis:
         Returns both lists.
         """
         sentimentDB = {}
-        sentimentfile = json.loads(open('sentiment/sentiment.json').read())
+        first = open('sentiment/sentiment.json')
+        sentimentfile = json.loads(first.read())
         for k, i in sentimentfile.iteritems():
             if float(i) > 6 or float(i) < 4:
                 sentimentDB[k] = (float(i) - 5)
-
+        first.close()
         sentimentAF = {}
-        sentimentfile2 = json.loads(open('sentiment/sentimentAF.json').read())
+        second = open('sentiment/sentimentAF.json')
+        sentimentfile2 = json.loads(second.read())
         for item in sentimentfile2:
             try:
                 sentimentAF[item[0]] = float(item[-1])
             except ValueError:
                 print 'Unexpected line: {!r}'.format(item)
+        second.close()
         return sentimentDB, sentimentAF
 
     def open_comments(self, filename):
