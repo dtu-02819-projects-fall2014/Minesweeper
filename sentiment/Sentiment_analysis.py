@@ -9,6 +9,8 @@ from collections import Counter
 from nltk.corpus import stopwords
 import json
 import simplejson
+import matplotlib.pyplot as plt
+from pylab import rcParams
 
 
 class Sentiment_analysis:
@@ -80,8 +82,8 @@ class Sentiment_analysis:
         sentiment = 0
         pos_list = []
         neg_list = []
+        comment_graph = []
         for comment in comments:
-            # print comment #for debugging
             total = 0
             number = 0
             value = 0
@@ -92,41 +94,37 @@ class Sentiment_analysis:
                          "couldn't", "wouldn't", "doesnt", "doesn't",
                          "don't", "dont"]  # Inverting words
             temp_list = self.tokenize(comment)
-            # print temp_list #for debugging
 
             for item in temp_list:
                 if item.lower() in test_list:
-                        invert = True
-                        # print "inverted", item.lower() #for debugging
-                        for k, i in sentlist.iteritems():
-                            if item.lower() == k:
-                                value = i
-                                word = k
-                            else:
-                                value = 0
+                    invert = True
+                    if item.lower() in sentlist:
+                        value = sentlist[item.lower()]
+                        word = item.lower()
+                    else:
+                        value = 0
+
                 else:
-                    for k, i in sentlist.iteritems():
-                        if item.lower() == k:
-                            if invert:
-                                total = total - i
-                                number += 1
-                                invert = False
-                                # print k, " inverted: ", -i #for debugging
-                                if i < 0:
-                                    pos_list.append(word + " " + k)
-                                else:
-                                    neg_list.append(word + " " + k)
+                    if item.lower() in sentlist:
+                        i = sentlist[item.lower()]
+                        if invert:
+                            total = total - i
+                            number += 1
+                            invert = False
+                            if i < 0:
+                                pos_list.append(word + " " + item.lower())
                             else:
-                                total += i
-                                number += 1
-                                # print k, i #for debugging
-                                if i < 0:
-                                    neg_list.append(k)
-                                else:
-                                    pos_list.append(k)
+                                neg_list.append(word + " " + item.lower())
+                        else:
+                            total += i
+                            number += 1
+                            if i < 0:
+                                neg_list.append(item.lower())
+                            else:
+                                pos_list.append(item.lower())
+
                     if invert:
                         invert = False
-                        # print "next word unknown", value #for debugging
                         if value < 0 and len(word) > 1:
                             neg_list.append(word)
                             total = total + value
@@ -140,14 +138,19 @@ class Sentiment_analysis:
             if number != 0 and total != 0:
                 final = final + (total/number)
                 final_ammount += 1
-                # print "comment score: ", total/number #for debugging
+                comment_graph.append(total/number)
+            else:
+                comment_graph.append(0)
 
         for w in [pos_list]:
             pos.update(w)
         for w in [neg_list]:
             neg.update(w)
-        sentiment = final / final_ammount
-        return sentiment, pos, neg
+        if final != 0 and final_ammount != 0:
+            sentiment = final / final_ammount
+        else:
+            sentiment = 0
+        return sentiment, pos, neg, comment_graph
 
     def get_sentiment_values(self, comment_file):
         """Run get_sentiment for both word lists."""
@@ -156,8 +159,55 @@ class Sentiment_analysis:
 
         DB, AF = self.get_word_lists()
         comments = self.open_comments(comment_file)
-        a, positive, negative = self.get_sentiment_value(comments, DB,
-                                                         positive, negative)
-        b, positive, negative = self.get_sentiment_value(comments, AF,
-                                                         positive, negative)
-        return a, b, positive, negative
+        a, positive, negative, cg1 = self.get_sentiment_value(comments, DB,
+                                                              positive,
+                                                              negative)
+        b, positive, negative, cg2 = self.get_sentiment_value(comments, AF,
+                                                              positive,
+                                                              negative)
+        return a, b, positive, negative, cg1, cg2
+
+    def plot_of_comments(self, comment_graph1, comment_graph2,
+                         normalization=100, x_size=10, y_size=10,
+                         name_video="test"):
+        """Save png graph of the comment sentiment as a function of time."""
+        amount = len(comment_graph1)
+        new_cg1 = []
+        temp = 0
+        for item in range(len(comment_graph1)):
+            if amount < normalization:
+                new_cg1 = comment_graph1
+            else:
+                for i in range(0, int(amount/normalization)):
+                    try:
+                        temp += comment_graph1[item+i]
+                    except:
+                        pass
+                temp = temp / (int(amount/normalization)+1)
+                new_cg1.append(temp)
+
+        new_cg2 = []
+        for item in range(len(comment_graph2)):
+            if amount < normalization:
+                new_cg2 = comment_graph2
+            else:
+                for i in range(0, int(amount/normalization)):
+                    try:
+                        temp += comment_graph2[item+i]
+                    except:
+                        pass
+                temp = temp / (int(amount/normalization)+1)
+                new_cg2.append(temp)
+
+        # set size
+        rcParams['figure.figsize'] = x_size, y_size
+
+        # data
+        plt.plot(new_cg1, color='b', label='MIT')
+        plt.plot(new_cg2, color='g', label='AFINN')
+        plt.ylabel('sentiment')
+        plt.xlabel('comment')
+        plt.legend()
+
+        # make pretty
+        plt.savefig(name_video + '.png')
