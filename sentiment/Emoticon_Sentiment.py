@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 This class provides a binary sentiment analyzer (1 = positive, -1 = negative).
 It is autmatically created using emoticons from thousands of comments.

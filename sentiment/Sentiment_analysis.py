@@ -1,4 +1,5 @@
 #!/usr/local/bin/python
+# -*- coding: utf-8 -*-
 """Contains the Sentiment_analysis class.
 
 Used for assesing the sentiment of a group of strings.
@@ -11,6 +12,7 @@ import json
 import simplejson
 import matplotlib.pyplot as plt
 from pylab import rcParams
+import sentiment.Emoticon_Sentiment as emse
 
 
 class Sentiment_analysis:
@@ -165,9 +167,18 @@ class Sentiment_analysis:
         b, positive, negative, cg2 = self.get_sentiment_value(comments, AF,
                                                               positive,
                                                               negative)
-        return a, b, positive, negative, cg1, cg2
+
+        # implementation of emoticons
+        S = emse.Emoticon_Sentiment(comment_file)
+        S.read_base_comments()
+        S.train_classifier(S.parse_comments())
+        los = []
+        for comment in comments:
+            los.append(S.predict(comment))
+        return a, b, positive, negative, cg1, cg2, los
 
     def plot_of_comments(self, comment_graph1, comment_graph2,
+                         comment_graph3,
                          normalization=100, x_size=10, y_size=10,
                          name_video="test"):
         """Save png graph of the comment sentiment as a function of time."""
@@ -185,6 +196,7 @@ class Sentiment_analysis:
                         pass
                 temp = temp / (int(amount/normalization)+1)
                 new_cg1.append(temp)
+                temp = 0
 
         new_cg2 = []
         for item in range(len(comment_graph2)):
@@ -198,6 +210,21 @@ class Sentiment_analysis:
                         pass
                 temp = temp / (int(amount/normalization)+1)
                 new_cg2.append(temp)
+                temp = 0
+
+        new_cg3 = []
+        for item in range(len(comment_graph3)):
+            if amount < normalization:
+                new_cg3 = comment_graph3
+            else:
+                for i in range(0, int(amount/normalization)):
+                    try:
+                        temp += comment_graph3[item+i]
+                    except:
+                        pass
+                temp = temp / (int(amount/normalization)+1)
+                new_cg3.append(temp)
+                temp = 0
 
         # set size
         rcParams['figure.figsize'] = x_size, y_size
@@ -205,6 +232,7 @@ class Sentiment_analysis:
         # data
         plt.plot(new_cg1, color='b', label='MIT')
         plt.plot(new_cg2, color='g', label='AFINN')
+        plt.plot(new_cg3, color='r', label='Emoticon')
         plt.ylabel('sentiment')
         plt.xlabel('comment')
         plt.legend()
