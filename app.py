@@ -14,16 +14,23 @@ class Video:
         self.url = url
         self.id =  urlparse.parse_qs(urlparse.urlparse(self.url).query)["v"][0]
         self.sentiment_values = self.get_sentiment_values()
-        self.emoticon_sentiment_values = self.get_sentiment_values()
+        self.create_graph_image()
+        self.graph_image_path = "/images/graphs/" + self.id + ".png"
         self.get_youtube_information()
+
 
     def get_sentiment_values(self):
         youtubeC = YoutubeC(self.url)
         youtubeC.get_comments()
         youtubeC.write_comments_to_file()
-        sentiment_values = Sentiment_analysis().get_sentiment_values(self.id + ".json")
+        sentiment_values = Sentiment_analysis().get_sentiment_values("tmp/" + self.id + ".json")
 
         return sentiment_values
+
+
+    def create_graph_image(self):
+        Sentiment_analysis().plot_of_comments(self.sentiment_values[4], self.sentiment_values[5], self.sentiment_values[6], name_video=self.id)
+
 
     def get_youtube_information(self):
         response = requests.get("https://gdata.youtube.com/feeds/api/videos/" + self.id + "?v=2&alt=json")
@@ -35,6 +42,7 @@ class Video:
 
 app = Flask(__name__, static_url_path = "")
 app.jinja_env.add_extension("jinja2.ext.with_")
+
 
 def isYoutubeURL(url):
     youtube_regex = (

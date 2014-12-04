@@ -1,0 +1,11 @@
+.video > div {
+    margin-top: 15pt;
+}
+
+.video > div:first-child {
+    margin-top: 0;
+}
+
+.video-title {
+    min-height: 45pt;
+}

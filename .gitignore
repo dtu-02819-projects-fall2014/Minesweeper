@@ -58,3 +58,8 @@ crashlytics-build.properties
 [Ll]ib
 [Ss]cripts
 pyvenv.cfg
+
+### Application ###
+tmp/**/*
+static/images/graphs/**/*
+!.keep

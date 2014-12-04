@@ -156,36 +156,46 @@ class Sentiment_analysis:
 
     def get_sentiment_values(self, comment_file):
         """Run get_sentiment for both word lists."""
-        positive = Counter()
-        negative = Counter()
+        world_list_positve = Counter()
+        word_list_negative = Counter()
 
         DB, AF = self.get_word_lists()
         comments = self.open_comments(comment_file)
-        a, positive, negative, cg1 = self.get_sentiment_value(comments, DB,
-                                                              positive,
-                                                              negative)
-        b, positive, negative, cg2 = self.get_sentiment_value(comments, AF,
-                                                              positive,
-                                                              negative)
+        sentiment_score_mit, world_list_positve, word_list_negative, comment_graph_list_mit = self.get_sentiment_value(comments, DB,
+                                                              world_list_positve,
+                                                              word_list_negative)
+        sentiment_score_afinn, world_list_positve, word_list_negative, comment_graph_list_afinn = self.get_sentiment_value(comments, AF,
+                                                              world_list_positve,
+                                                              word_list_negative)
 
         # implementation of emoticons
         S = emse.Emoticon_Sentiment("tests/samples/output.txt")
         S.read_base_comments()
         S.train_classifier(S.parse_comments())
-        los = []
+        list_of_emoticons = []
         for comment in comments:
-            los.append(S.predict(comment))
+            list_of_emoticons.append(S.predict(comment))
 
         # return emoticon value
-        c = 0
-        for item in los:
+        emoticon_positives = 0
+        emoticon_negatives = 0
+        for value in list_of_emoticons:
             try:
-               c += int(item)
+                if  value > 0:
+                    emoticon_positives += int(value)
+                else:
+                    emoticon_negatives += int(value)
             except TypeError:
                 print "TypeError: No emoticons on train set"
 #               pass
-        c = c / len(los)
-        return a, b, positive, negative, cg1, cg2, los, c
+
+        if emoticon_negatives > emoticon_positives:
+            emoticon_score = -1
+        else:
+            emoticon_score = 1
+
+        return sentiment_score_mit, sentiment_score_afinn, world_list_positve, word_list_negative,\
+               comment_graph_list_mit, comment_graph_list_afinn, list_of_emoticons, emoticon_score
 
     def plot_of_comments(self, comment_graph1, comment_graph2,
                          comment_graph3,
@@ -246,6 +256,7 @@ class Sentiment_analysis:
         plt.ylabel('sentiment')
         plt.xlabel('comment')
         plt.legend()
-
+        plt.rcParams.update({'font.size': 22})
         # make pretty
-        plt.savefig(name_video + '.png')
+        plt.savefig("static/images/graphs/" + name_video + ".png",bbox_inches='tight', transparent=True)
+        plt.close()

@@ -38,7 +38,7 @@ class YoutubeC:
         """
         Writes the list of comments to a json file
         """
-        vs = self.video+'.json'
+        vs = "tmp/" + self.video + ".json"
         f = open(vs, 'w')
         simplejson.dump(self.comments, f)
         f.close()

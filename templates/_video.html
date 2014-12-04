@@ -1,13 +1,11 @@
-<div class="well">
+<div class="video well">
     <div>
         <img src="{{ video.thumbnail_url }}" width="100%" />
-        <h3>{{ video.name }}:</h3>
+        <h3 class="video-title">{{ video.name }}:</h3>
     </div>
 
-    <br />
-
     <div>
-        <strong>MIT Sentiment Score:</strong> {{ video.sentiment_values[0] }}
+        <strong>MIT Sentiment Score:</strong> {{ video.sentiment_values[0]|round(2) }}
         <div>
             <div class="text-success" style="float: right">Positive</div>
             <div class="text-danger">Negative</div>
@@ -18,10 +16,8 @@
         </div>
     </div>
 
-    <br />
-
     <div>
-        <strong>AFINN Sentiment Score:</strong> {{ video.sentiment_values[1] }}
+        <strong>AFINN Sentiment Score:</strong> {{ video.sentiment_values[1]|round(2) }}
         <div>
             <div class="text-success" style="float: right">Positive</div>
             <div class="text-danger">Negative</div>
@@ -32,10 +28,21 @@
         </div>
     </div>
 
-    <br />
+    <div>
+        <strong>Emoticon Sentiment Score:</strong>
+        {% if video.sentiment_values[7] == 1 %}
+        <img src="/images/smileys/positive.png" />
+        {% else %}
+        <img src="/images/smileys/negative.png" />
+        {% endif %}
+    </div>
+    <div>
+        <strong>Sentiment Over Time:</strong>
+        <img src="{{ video.graph_image_path }}" width="100%" />
+    </div>
 
    <div class="text-success">
-       <h4>Good words:</h4>
+       <strong>Good words:</strong>
         <ul>
             {% for word in video.sentiment_values[2]|dictsort(false, 'value')|reverse %}
                 {% if loop.index <= 10 %}
@@ -45,10 +52,8 @@
         </ul>
    </div>
 
-    <br />
-
     <div class="text-danger">
-        <h4>Bad words:</h4>
+        <strong>Bad words:</strong>
         <ul>
             {% for word in video.sentiment_values[3]|dictsort(false, 'value')|reverse %}
                 {% if loop.index <= 10 %}
