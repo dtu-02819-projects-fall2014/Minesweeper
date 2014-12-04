@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="col-md-6 col-md-offset-3">
+        {% if error_message %}
+        <h2>Please input both Youtube links to be examined in the forms below:</h2>
+        {% endif %}
+        <form method="GET" action="/comparison" role="form">
+            <div class="form-group">
+                <label for="video_1_url">Video 1 URL:</label>
+                <input type="text" name="video_1_url" id="video_1_url" class="form-control" placeholder="Enter URL">
+            </div>
+            <div class="form-group">
+                <label for="video_2_url">Video 2 URL:</label>
+                <input type="text" name="video_2_url" id="video_2_url" class="form-control" placeholder="Enter URL">
+            </div>
+            <button type="submit" class="btn btn-default btn-success">Compare Videos!</button>
+        </form>
+    </div>
+{% endblock %}

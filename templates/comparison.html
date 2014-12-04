@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="col-md-5 col-md-offset-1">
+        {% with video=video_1 %}
+            {% include "_video.html" %}
+        {% endwith %}
+    </div>
+    <div class="col-md-5">
+        {% with video=video_2 %}
+            {% include "_video.html" %}
+        {% endwith %}
+    </div>
+{% endblock %}

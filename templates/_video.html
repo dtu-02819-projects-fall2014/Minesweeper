@@ -1,0 +1,60 @@
+<div class="well">
+    <div>
+        <img src="{{ video.thumbnail_url }}" width="100%" />
+        <h3>{{ video.name }}:</h3>
+    </div>
+
+    <br />
+
+    <div>
+        <strong>MIT Sentiment Score:</strong> {{ video.sentiment_values[0] }}
+        <div>
+            <div class="text-success" style="float: right">Positive</div>
+            <div class="text-danger">Negative</div>
+            <div style="clear: both"></div>
+            <div style="border: 1px solid #ccc; width: 100%">
+                <div style="border-right: 3px solid #000; width: {{ (video.sentiment_values[0] + 5) * 10 }}%">&nbsp;</div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+    <div>
+        <strong>AFINN Sentiment Score:</strong> {{ video.sentiment_values[1] }}
+        <div>
+            <div class="text-success" style="float: right">Positive</div>
+            <div class="text-danger">Negative</div>
+            <div style="clear: both"></div>
+            <div style="border: 1px solid #ccc; width: 100%">
+                <div style="border-right: 3px solid #000; width: {{ (video.sentiment_values[1] + 5) * 10 }}%">&nbsp;</div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+   <div class="text-success">
+       <h4>Good words:</h4>
+        <ul>
+            {% for word in video.sentiment_values[2]|dictsort(false, 'value')|reverse %}
+                {% if loop.index <= 10 %}
+                    <li>{{ word[0] }} {{ word[1] }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+   </div>
+
+    <br />
+
+    <div class="text-danger">
+        <h4>Bad words:</h4>
+        <ul>
+            {% for word in video.sentiment_values[3]|dictsort(false, 'value')|reverse %}
+                {% if loop.index <= 10 %}
+                    <li>{{ word[0] }} {{ word[1] }}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>
