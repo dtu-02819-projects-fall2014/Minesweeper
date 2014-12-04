@@ -169,7 +169,7 @@ class Sentiment_analysis:
                                                               negative)
 
         # implementation of emoticons
-        S = emse.Emoticon_Sentiment(comment_file)
+        S = emse.Emoticon_Sentiment("tests/samples/output.txt")
         S.read_base_comments()
         S.train_classifier(S.parse_comments())
         los = []
@@ -182,7 +182,7 @@ class Sentiment_analysis:
             try:
                c += int(item)
             except TypeError:
-                print "TypeError: No emoticons found"
+                print "TypeError: No emoticons on train set"
 #               pass
         c = c / len(los)
         return a, b, positive, negative, cg1, cg2, los, c
