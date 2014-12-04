@@ -175,7 +175,17 @@ class Sentiment_analysis:
         los = []
         for comment in comments:
             los.append(S.predict(comment))
-        return a, b, positive, negative, cg1, cg2, los
+
+        # return emoticon value
+        c = 0
+        for item in los:
+            try:
+               c += int(item)
+            except TypeError:
+                print "TypeError: No emoticons found"
+#               pass
+        c = c / len(los)
+        return a, b, positive, negative, cg1, cg2, los, c
 
     def plot_of_comments(self, comment_graph1, comment_graph2,
                          comment_graph3,
