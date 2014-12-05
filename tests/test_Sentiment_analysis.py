@@ -1,9 +1,12 @@
 # testing of sentiment class
 
 import sentiment.Sentiment_analysis as senti
+import sentiment.YoutubeC as yt
 import nltk
+import os
 
 my_sent = senti.Sentiment_analysis()
+
 
 
 def test_if_word_lists_are_there():
@@ -71,3 +74,11 @@ def test_plot_of_sentiment():
     my_sent.get_sentiment_values('tests/samples/output.txt')
     my_sent.plot_of_comments(cg1, cg2, cg3, normalization=100,
                              x_size=10, y_size=10, name_video="lol")
+							 
+def test_youtube_comment_extractor():
+    """See if the extractor works"""
+    url="https://www.youtube.com/watch?v=I2vrCUFAaSo"
+    my_yt = yt.YoutubeC(url)
+    my_yt.get_comments()
+    my_yt.write_comments_to_file()
+    assert os.path.isfile("tmp/I2vrCUFAaSo.json")
