@@ -14,6 +14,9 @@ Developed for the course of:
 02819 Data mining using Python - Technical University of Denmark
 
 ### II. Description:
+
+This project runs on a WEB UI where the user can compare the sentiment of 2 videos. That being said it can also be used for other functions, such as simply downloading large quantities of youtube comments, or analysing the sentiment of any group of strings (such as tweets, books, etc.)
+
 Classes:
 
 * `YoutubeC.py` downloads all the Youtube comments for a video
@@ -22,7 +25,18 @@ Classes:
 
 * `Emoticon_Sentiment.py` provides a binary sentiment analyzer (1 = positive, -1 = negative)
 
-### III. Word lists used:
+* `app.py` Used for the GUI
+
+### III. Youtube comment extraction
+
+The YoutubeC.py class mines large quantities of youtube comments and saves them to a file.
+
+### IV. Sentiment analysis:
+
+There are 2 sentiment analysers, the word list sentiment analyser and an emoticon classifier using machine learning.
+
+Word lists used:
+
 - [AFINN list](http://neuro.imm.dtu.dk/wiki/AFINN)
 
 - [MIT list](http://goo.gl/01A0iw)
@@ -71,9 +85,10 @@ The parameters are the 3 sentiment lists and (OPTIONAL):
 - x_size and y_size: Size of the image saved in directory
 - name_video: Name for the graph file.
 
-![alt text](http://i.imgur.com/951PSfU.png "Plot sample. Ignore smoothness, as the normalization and size were left to default")
+![alt text](http://i.imgur.com/F7XJQyQl.jpg "Plot sample. Ignore smoothness, as the normalization and size were left to default")
 
-### III. Other
-Add here
+### V. Web UI
+
+The GUI makes use of all the classes which are graphically displayed on a webpage.
 
 ![alt text](http://upload.wikimedia.org/wikipedia/en/5/5c/Minesweeper_Icon.png "Not that kind of mine. Datamining...")
