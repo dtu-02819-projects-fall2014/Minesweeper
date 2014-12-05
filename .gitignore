@@ -62,4 +62,5 @@ pyvenv.cfg
 ### Application ###
 tmp/**/*
 static/images/graphs/**/*
+*.pyc
 !.keep
