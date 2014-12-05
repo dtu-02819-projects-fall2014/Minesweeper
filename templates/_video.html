@@ -42,7 +42,7 @@
     </div>
 
    <div class="text-success">
-       <strong>Good words:</strong>
+       <strong>Most Common Good words:</strong>
         <ul>
             {% for word in video.sentiment_values[2]|dictsort(false, 'value')|reverse %}
                 {% if loop.index <= 10 %}
@@ -52,8 +52,27 @@
         </ul>
    </div>
 
+  <div>
+    <strong>Most Common Words:</strong>
+    <table class = table width="70%">
+        <tr><th colspan="2" class="text-success">Good Word</th><th colspan="2" class="text-danger">Bad Words</th></tr>
+        <tr>
+            <th>Word</th>
+            <th>Frequency</th>
+            <th>Word</th>
+            <th>Frequency</th>
+        </tr>
+        {% for good in video.sentiment_values[2]|dictsort(false, 'value')|reverse %}
+            {% if loop.index <= 10 %}
+        <tr>
+            <td>{{ good[0] }}</td><td>{{ good[1] }}</td>
+        </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+    </div>
     <div class="text-danger">
-        <strong>Bad words:</strong>
+        <strong>Most Common Bad words:</strong>
         <ul>
             {% for word in video.sentiment_values[3]|dictsort(false, 'value')|reverse %}
                 {% if loop.index <= 10 %}

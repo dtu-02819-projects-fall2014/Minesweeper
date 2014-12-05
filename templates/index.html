@@ -3,7 +3,9 @@
 {% block content %}
     <div class="col-md-6 col-md-offset-3">
         {% if error_message %}
-        <h2>Please input both Youtube links to be examined in the forms below:</h2>
+        <p>
+            <strong class="text-danger">Invalid links. Please format your links properly.</strong>
+        </p>
         {% endif %}
         <form method="GET" action="/comparison" role="form">
             <div class="form-group">
