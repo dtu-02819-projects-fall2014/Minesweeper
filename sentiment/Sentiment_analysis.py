@@ -161,13 +161,13 @@ class Sentiment_analysis:
 
         DB, AF = self.get_word_lists()
         comments = self.open_comments(comment_file)
-        sent_score_mit,word_list_pos,word_list_neg,comment_graph_mit = (
+        sent_score_mit, word_list_pos, word_list_neg, comment_graph_mit = (
             self.get_sentiment_value(
                 comments,
                 DB,
                 word_list_pos,
                 word_list_neg))
-        sentiment_score_af, word_list_pos, word_list_neg, comment_graph_af =(
+        sentiment_score_af, word_list_pos, word_list_neg, comment_graph_af = (
             self.get_sentiment_value(
                 comments,
                 AF,
@@ -188,7 +188,7 @@ class Sentiment_analysis:
         emoticon_negatives = 0
         for value in list_of_emoticons:
             try:
-                if  value > 0:
+                if value > 0:
                     emoticon_positives += int(value)
                 else:
                     emoticon_negatives += int(value)
@@ -201,8 +201,9 @@ class Sentiment_analysis:
         else:
             emoticon_score = 1
 
-        return sent_score_mit, sentiment_score_af, word_list_pos, word_list_neg,\
-               comment_graph_mit, comment_graph_af, list_of_emoticons, emoticon_score
+        return sent_score_mit, sentiment_score_af, word_list_pos,\
+               word_list_neg,comment_graph_mit,\
+               comment_graph_af, list_of_emoticons, emoticon_score
 
     def normalize_data(self, list1, amount, normalization):
         """Tool to normalize the list of comments.
@@ -218,9 +219,9 @@ class Sentiment_analysis:
             else:
                 for i in range(0, int(amount/normalization)):
                     try:
-                       temp += list1[item+i]
+                        temp += list1[item+i]
                     except:
-                       pass
+                        pass
                 temp = temp / (int(amount/normalization)+1)
                 new_list.append(temp)
         return new_list
@@ -249,5 +250,6 @@ class Sentiment_analysis:
         plt.legend()
         plt.rcParams.update({'font.size': 22})
         # make pretty
-        plt.savefig("static/images/graphs/" + name_video + ".png",bbox_inches='tight', transparent=True)
+        plt.savefig("static/images/graphs/" + name_video + ".png",
+                    bbox_inches='tight', transparent=True)
         plt.close()

@@ -115,7 +115,7 @@ def index():
 def comparison():
     """
     Create videos and rensers Comparison site.
-    
+
     Create 2 instances of Video, checks whether they are valid links.
     If they are the comparison-page is rendered.
     Otherwise the index page is shown with an error message.
