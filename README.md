@@ -1,6 +1,6 @@
 # [Minesweeper](https://github.com/MiningPythonGroup/Minesweeper)
 ## Tool to analyse the sentiment of youtube comments in Python
-
+Updated: 05/12/2014. The code is constantly updated, so the examples might be outdated at times. Please check the docstrings for more reliable help.
 
 ### I. Authors:
 * André Castro Lundin
