@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Use for classifiying and training the emoticon classifier
+Use for classifiying and training the emoticon classifier.
 
 This class provides a binary sentiment analyzer (1 = positive, -1 = negative).
 It is autmatically created using emoticons from thousands of comments.
