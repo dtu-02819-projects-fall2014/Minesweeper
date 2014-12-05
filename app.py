@@ -10,7 +10,18 @@ import simplejson
 import re
 
 class Video:
+    """Contains information about the video. Each video should have it's own instance of Video.    """
+
     def __init__(self, url):
+        """initializes and stores data about the video
+
+        Args:
+          url (str): The url of the video
+          id (str): The Youtube Video ID
+          sentiment_values: List of sentiment values
+          graph_image_path: Path to the image of the sentiment-graph
+          """
+
         self.url = url
         self.id =  urlparse.parse_qs(urlparse.urlparse(self.url).query)["v"][0]
         self.sentiment_values = self.get_sentiment_values()
@@ -20,15 +31,16 @@ class Video:
 
 
     def get_sentiment_values(self):
+        """Return sentiment values by extracting youtube comments and process these in sentiment_analysis."""
         youtubeC = YoutubeC(self.url)
         youtubeC.get_comments()
         youtubeC.write_comments_to_file()
         sentiment_values = Sentiment_analysis().get_sentiment_values("tmp/" + self.id + ".json")
-
         return sentiment_values
 
 
     def create_graph_image(self):
+        """Creates graph of """
         Sentiment_analysis().plot_of_comments(self.sentiment_values[4], self.sentiment_values[5], self.sentiment_values[6], name_video=self.id)
 
 
