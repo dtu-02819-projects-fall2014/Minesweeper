@@ -1,3 +1,8 @@
+"""
+Functions as a controller for the website. Collects information from other classes,
+and renders the website.
+"""
+
 import os
 from flask import Flask, render_template, request
 from sentiment.Sentiment_analysis import Sentiment_analysis
@@ -9,20 +14,26 @@ import re
 
 
 class Video:
-    """Contains information about the video.
-    Each video got it's own instance of Video"""
+
+    """
+    Contains information about the video.
+
+    Collects information about the video, by extracting comments,
+    and analysising the sentiment of them.
+    Each video got it's own instance of Video
+    """
 
     def __init__(self, url):
-        """initializes and stores data about the video
+        """initialize and store data about the video.
 
         Args:
-          url (str): The url of the video
+        url (str): The url of the video
 
         Variables:
-          id (str): The Youtube Video ID
-          sentiment_values: List of sentiment values
-          graph_image_path: Path to the image of the sentiment-graph
-          """
+        id (str): The Youtube Video ID
+        sentiment_values: List of sentiment values
+        graph_image_path: Path to the image of the sentiment-graph
+        """
         self.url = url
         self.id = urlparse.parse_qs(urlparse.urlparse(self.url).query)["v"][0]
         self.sentiment_values = self.get_sentiment_values()
@@ -31,8 +42,10 @@ class Video:
         self.get_youtube_information()
 
     def get_sentiment_values(self):
-        """Returns sentiment values by extracting youtube comments.
-         Afterwards it process these in sentiment_analysis."""
+        """
+        Return sentiment values by extracting youtube comments.
+        Afterwards a sentiment analysis is performed.
+        """
         youtube_comment_extractor = YoutubeC(self.url)
         youtube_comment_extractor.get_comments()
         youtube_comment_extractor.write_comments_to_file()
@@ -41,15 +54,17 @@ class Video:
         return sentiment_values
 
     def create_graph_image(self):
-        """Creates "Sentiment Over Time" -graph.
-         And saves the file as the videoid .png"""
+        """
+        Create "Sentiment Over Time" -graph.
+         And saves the file as the videoid .png
+         """
         Sentiment_analysis().plot_of_comments(self.sentiment_values[4],
                                               self.sentiment_values[5],
                                               self.sentiment_values[6],
                                               name_video=self.id)
 
     def get_youtube_information(self):
-        """ Collects the youtube videos title and thumbnail."""
+        """ Collect the youtube videos title and thumbnail."""
         response = requests.get(
             "https://gdata.youtube.com/feeds/api/videos/"
             + self.id + "?v=2&alt=json")
@@ -65,7 +80,9 @@ app.jinja_env.add_extension("jinja2.ext.with_")
 
 
 def is_youtube_url(url):
-    """Returns True or False depending on the URL is a youtube url or not.
+    """
+    Return True or False depending on the URL is a youtube url or not.
+
     Args:
     url (str): the URL of the video to be examined.
 
@@ -90,7 +107,8 @@ def index():
 
 @app.route("/comparison")
 def comparison():
-    """Creates 2 instances of Video, checks whether they are valid links.
+    """
+    Create 2 instances of Video, checks whether they are valid links.
     If they are the comparison-page is rendered.
     Otherwise the index page is shown with an error message.
 
