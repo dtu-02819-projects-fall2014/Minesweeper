@@ -62,14 +62,13 @@ def index():
 
 @app.route("/comparison")
 def comparison():
-    video_1_url = request.args.get("video_1_url")
-    video_2_url = request.args.get("video_2_url")
+    video_1_url = request.args.get("video_1_url", "")
+    video_2_url = request.args.get("video_2_url", "")
     if isYoutubeURL(video_1_url) and isYoutubeURL(video_2_url):
 
         video_1 = Video(request.args.get("video_1_url"))
         video_2 = Video(request.args.get("video_2_url"))
 
-    #return render_template("index.html", error_message = "Error")
         return render_template(
             "comparison.html",
             video_1 = video_1,
