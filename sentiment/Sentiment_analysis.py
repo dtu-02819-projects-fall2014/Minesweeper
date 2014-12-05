@@ -202,7 +202,7 @@ class Sentiment_analysis:
             emoticon_score = 1
 
         return sent_score_mit, sentiment_score_af, word_list_pos,\
-               word_list_neg,comment_graph_mit,\
+               word_list_neg, comment_graph_mit,\
                comment_graph_af, list_of_emoticons, emoticon_score
 
     def normalize_data(self, list1, amount, normalization):

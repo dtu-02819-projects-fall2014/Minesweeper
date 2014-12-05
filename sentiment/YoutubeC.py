@@ -20,12 +20,13 @@ import simplejson
 
 
 class YoutubeC:
-    """
-    Provides access to the comments of a given Youtube video.
-    """
+
+    """Provides access to the comments of a given Youtube video."""
 
     def __init__(self, url):
         """
+        Initialize the Youtube Comment extractor.
+
         Args:
           url (str): The youtube video to be analyzed (as copied from the
           browser url field)
@@ -35,9 +36,7 @@ class YoutubeC:
         self.comments = []
 
     def write_comments_to_file(self):
-        """
-        Writes the list of comments to a json file
-        """
+        """Write the list of comments to a json file."""
         vs = "tmp/" + self.video + ".json"
         f = open(vs, 'w')
         simplejson.dump(self.comments, f)
@@ -45,7 +44,9 @@ class YoutubeC:
 
     def get_comments(self):
         """
-        Takes the url of the youtube video and sends a http request via the
+        Get the comments of a youtube video.
+
+        Take the url of the youtube video and sends a http request via the
         youtube API. From the response, it takes the comments and the next
         link and sends it again to the Youtube API. This is repeated until
         no more next links are available. The reason for this iterative
