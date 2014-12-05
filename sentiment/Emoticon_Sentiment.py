@@ -28,7 +28,7 @@ from nltk.corpus import stopwords
 class Emoticon_Sentiment:
     """
     This class provides a binary sentiment analyzer (1 = positive, -1 =
-    negative). It is autmatically created using emoticons from thousands of
+    negative). It is automatically created using emoticons from thousands of
     comments.
     """
 
