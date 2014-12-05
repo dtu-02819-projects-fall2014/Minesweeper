@@ -9,7 +9,8 @@ import re
 
 
 class Video:
-    """Contains information about the video. Each video should have it's own instance of Video.    """
+    """Contains information about the video.
+    Each video got it's own instance of Video"""
 
     def __init__(self, url):
         """initializes and stores data about the video
@@ -30,25 +31,34 @@ class Video:
         self.get_youtube_information()
 
     def get_sentiment_values(self):
-        """Returns sentiment values by extracting youtube comments and process these in sentiment_analysis."""
+        """Returns sentiment values by extracting youtube comments.
+         Afterwards it process these in sentiment_analysis."""
         youtube_comment_extractor = YoutubeC(self.url)
         youtube_comment_extractor.get_comments()
         youtube_comment_extractor.write_comments_to_file()
-        sentiment_values = Sentiment_analysis().get_sentiment_values("tmp/" + self.id + ".json")
+        sentiment_values = Sentiment_analysis() \
+            .get_sentiment_values("tmp/" + self.id + ".json")
         return sentiment_values
 
     def create_graph_image(self):
-        """Creates "Sentiment Over Time" -graph and saves the file as the videoid .png"""
-        Sentiment_analysis().plot_of_comments(self.sentiment_values[4], self.sentiment_values[5],
-                                              self.sentiment_values[6], name_video=self.id)
+        """Creates "Sentiment Over Time" -graph.
+         And saves the file as the videoid .png"""
+        Sentiment_analysis().plot_of_comments(self.sentiment_values[4],
+                                              self.sentiment_values[5],
+                                              self.sentiment_values[6],
+                                              name_video=self.id)
 
     def get_youtube_information(self):
         """ Collects the youtube videos title and thumbnail."""
-        response = requests.get("https://gdata.youtube.com/feeds/api/videos/" + self.id + "?v=2&alt=json")
+        response = requests.get(
+            "https://gdata.youtube.com/feeds/api/videos/"
+            + self.id + "?v=2&alt=json")
         if response.status_code == 200:
             data = simplejson.loads(response.text)
             self.name = data["entry"]["title"]["$t"]
-            self.thumbnail_url = data["entry"]["media$group"]["media$thumbnail"][3]["url"]
+            self.thumbnail_url = data["entry"][
+                "media$group"]["media$thumbnail"][3]["url"]
+
 
 app = Flask(__name__, static_url_path="")
 app.jinja_env.add_extension("jinja2.ext.with_")
@@ -80,11 +90,13 @@ def index():
 
 @app.route("/comparison")
 def comparison():
-    """Creates 2 instances of Video, checks whether they are valid links. If they are the comparisonpage is rendered.
+    """Creates 2 instances of Video, checks whether they are valid links.
+    If they are the comparison-page is rendered.
     Otherwise the index page is shown with an error message.
 
     Variables:
-    video_1_url (str) and video_2_url (str): The user inputted strings of the URL for the Youtube Videos.
+    video_1_url (str) and video_2_url (str):
+        The user inputted strings of the URL for the Youtube Videos.
     """
 
     video_1_url = request.args.get("video_1_url", "")
@@ -101,6 +113,7 @@ def comparison():
         )
     else:
         return render_template("index.html", error_message="Error")
+
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
