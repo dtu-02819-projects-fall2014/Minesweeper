@@ -7,7 +7,6 @@ import os
 my_sent = senti.Sentiment_analysis()
 
 
-
 def test_if_word_lists_are_there():
     """Test that everything is ok with word lists."""
     a, b = my_sent.get_word_lists()
