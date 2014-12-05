@@ -161,9 +161,13 @@ class Sentiment_analysis:
 
         DB, AF = self.get_word_lists()
         comments = self.open_comments(comment_file)
-        sentiment_score_mit, world_list_positve, word_list_negative, comment_graph_list_mit = self.get_sentiment_value(comments, DB,
+        sentiment_score_mit,
+		world_list_positve,
+		word_list_negative,
+		comment_graph_list_mit = (
+                                  self.get_sentiment_value(comments, DB,
                                                               world_list_positve,
-                                                              word_list_negative)
+                                                              word_list_negative))
         sentiment_score_afinn, world_list_positve, word_list_negative, comment_graph_list_afinn = self.get_sentiment_value(comments, AF,
                                                               world_list_positve,
                                                               word_list_negative)
@@ -197,62 +201,46 @@ class Sentiment_analysis:
         return sentiment_score_mit, sentiment_score_afinn, world_list_positve, word_list_negative,\
                comment_graph_list_mit, comment_graph_list_afinn, list_of_emoticons, emoticon_score
 
+    def normalize_data(self, list1, amount, normalization):
+        """Tool to normalize the list of comments.
+
+        This is useful to avoid too much noise
+        with many peaks when there are many comments.
+        """
+        new_list = []
+        temp = 0
+        for item in range(len(list1)):
+            if amount < normalization:
+                new_list = list1
+            else:
+                for i in range(0, int(amount/normalization)):
+                    try:
+                       temp += list1[item+i]
+                    except:
+                       pass
+                temp = temp / (int(amount/normalization)+1)
+                new_list.append(temp)
+        return new_list
+
     def plot_of_comments(self, comment_graph1, comment_graph2,
                          comment_graph3,
                          normalization=100, x_size=10, y_size=10,
                          name_video="test"):
         """Save png graph of the comment sentiment as a function of time."""
         amount = len(comment_graph1)
-        new_cg1 = []
-        temp = 0
-        for item in range(len(comment_graph1)):
-            if amount < normalization:
-                new_cg1 = comment_graph1
-            else:
-                for i in range(0, int(amount/normalization)):
-                    try:
-                        temp += comment_graph1[item+i]
-                    except:
-                        pass
-                temp = temp / (int(amount/normalization)+1)
-                new_cg1.append(temp)
-                temp = 0
 
-        new_cg2 = []
-        for item in range(len(comment_graph2)):
-            if amount < normalization:
-                new_cg2 = comment_graph2
-            else:
-                for i in range(0, int(amount/normalization)):
-                    try:
-                        temp += comment_graph2[item+i]
-                    except:
-                        pass
-                temp = temp / (int(amount/normalization)+1)
-                new_cg2.append(temp)
-                temp = 0
-
-        new_cg3 = []
-        for item in range(len(comment_graph3)):
-            if amount < normalization:
-                new_cg3 = comment_graph3
-            else:
-                for i in range(0, int(amount/normalization)):
-                    try:
-                        temp += comment_graph3[item+i]
-                    except:
-                        pass
-                temp = temp / (int(amount/normalization)+1)
-                new_cg3.append(temp)
-                temp = 0
+        # Normalize lists
+        cg1 = self.normalize_data(comment_graph1, amount, normalization)
+        cg2 = self.normalize_data(comment_graph2, amount, normalization)
+        cg3 = self.normalize_data(comment_graph3, amount, normalization)
 
         # set size
         rcParams['figure.figsize'] = x_size, y_size
 
         # data
-        plt.plot(new_cg1, color='b', label='MIT')
-        plt.plot(new_cg2, color='g', label='AFINN')
-        plt.plot(new_cg3, color='r', label='Emoticon')
+        plt.plot(cg1, color='b', label='MIT')
+        plt.plot(cg2, color='g', label='AFINN')
+        plt.plot(cg3, color='r', label='Emoticon')
         plt.ylabel('sentiment')
         plt.xlabel('comment')
         plt.legend()
