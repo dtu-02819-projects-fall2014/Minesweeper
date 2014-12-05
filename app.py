@@ -1,5 +1,7 @@
 """
-Functions as a controller for the website. Collects information from other classes,
+Functions as a controller for the website.
+
+Collects information from other classes.
 and renders the website.
 """
 
@@ -44,6 +46,7 @@ class Video:
     def get_sentiment_values(self):
         """
         Return sentiment values by extracting youtube comments.
+
         Afterwards a sentiment analysis is performed.
         """
         youtube_comment_extractor = YoutubeC(self.url)
@@ -56,8 +59,10 @@ class Video:
     def create_graph_image(self):
         """
         Create "Sentiment Over Time" -graph.
-         And saves the file as the videoid .png
-         """
+
+        Creates the graph and saves it
+        And saves the file as the videoid .png
+        """
         Sentiment_analysis().plot_of_comments(self.sentiment_values[4],
                                               self.sentiment_values[5],
                                               self.sentiment_values[6],
@@ -102,13 +107,15 @@ def is_youtube_url(url):
 
 @app.route("/")
 def index():
-    """Renders Index Page"""
+    """Render Index Page."""
     return render_template("index.html")
 
 
 @app.route("/comparison")
 def comparison():
     """
+    Create videos and rensers Comparison site.
+    
     Create 2 instances of Video, checks whether they are valid links.
     If they are the comparison-page is rendered.
     Otherwise the index page is shown with an error message.
@@ -117,7 +124,6 @@ def comparison():
     video_1_url (str) and video_2_url (str):
         The user inputted strings of the URL for the Youtube Videos.
     """
-
     video_1_url = request.args.get("video_1_url", "")
     video_2_url = request.args.get("video_2_url", "")
     if is_youtube_url(video_1_url) and is_youtube_url(video_2_url):
