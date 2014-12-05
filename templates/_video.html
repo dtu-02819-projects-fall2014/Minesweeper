@@ -30,6 +30,7 @@
 
     <div>
         <strong>Emoticon Sentiment Score:</strong>
+        <br><br>
         {% if video.sentiment_values[7] == 1 %}
         <img src="/images/smileys/positive.png" />
         {% else %}
@@ -41,44 +42,39 @@
         <img src="{{ video.graph_image_path }}" width="100%" />
     </div>
 
-   <div class="text-success">
-       <strong>Most Common Good words:</strong>
-        <ul>
+    <div>
+        <strong class="text-success">Most Common Good Words</strong>
+        <table class="table">
+            <tr>
+                <th>Word</th>
+                <th>Frequency</th>
+            </tr>
             {% for word in video.sentiment_values[2]|dictsort(false, 'value')|reverse %}
                 {% if loop.index <= 10 %}
-                    <li>{{ word[0] }} {{ word[1] }}</li>
+                    <tr>
+                        <td>{{ word[0] }}</td>
+                        <td>{{ word[1] }}</td>
+                    </tr>
                 {% endif %}
             {% endfor %}
-        </ul>
-   </div>
-
-  <div>
-    <strong>Most Common Words:</strong>
-    <table class = table width="70%">
-        <tr><th colspan="2" class="text-success">Good Word</th><th colspan="2" class="text-danger">Bad Words</th></tr>
-        <tr>
-            <th>Word</th>
-            <th>Frequency</th>
-            <th>Word</th>
-            <th>Frequency</th>
-        </tr>
-        {% for good in video.sentiment_values[2]|dictsort(false, 'value')|reverse %}
-            {% if loop.index <= 10 %}
-        <tr>
-            <td>{{ good[0] }}</td><td>{{ good[1] }}</td>
-        </tr>
-            {% endif %}
-        {% endfor %}
-    </table>
+        </table>
     </div>
-    <div class="text-danger">
-        <strong>Most Common Bad words:</strong>
-        <ul>
+
+    <div>
+        <strong class="text-danger">Most Common Bad Words</strong>
+        <table class="table">
+            <tr>
+                <th>Word</th>
+                <th>Frequency</th>
+            </tr>
             {% for word in video.sentiment_values[3]|dictsort(false, 'value')|reverse %}
                 {% if loop.index <= 10 %}
-                    <li>{{ word[0] }} {{ word[1] }}</li>
+                    <tr>
+                        <td>{{ word[0] }}</td>
+                        <td>{{ word[1] }}</td>
+                    </tr>
                 {% endif %}
             {% endfor %}
-        </ul>
+        </table>
     </div>
 </div>

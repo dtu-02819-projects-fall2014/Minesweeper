@@ -156,21 +156,24 @@ class Sentiment_analysis:
 
     def get_sentiment_values(self, comment_file):
         """Run get_sentiment for both word lists."""
-        world_list_positve = Counter()
-        word_list_negative = Counter()
+        word_list_pos = Counter()
+        word_list_neg = Counter()
 
         DB, AF = self.get_word_lists()
         comments = self.open_comments(comment_file)
-        sentiment_score_mit,
-		world_list_positve,
-		word_list_negative,
-		comment_graph_list_mit = (
-                                  self.get_sentiment_value(comments, DB,
-                                                              world_list_positve,
-                                                              word_list_negative))
-        sentiment_score_afinn, world_list_positve, word_list_negative, comment_graph_list_afinn = self.get_sentiment_value(comments, AF,
-                                                              world_list_positve,
-                                                              word_list_negative)
+        sent_score_mit,word_list_pos,word_list_neg,comment_graph_mit = (
+            self.get_sentiment_value(
+                comments,
+                DB,
+                word_list_pos,
+                word_list_neg))
+        sentiment_score_af, word_list_pos, word_list_neg, comment_graph_af =(
+            self.get_sentiment_value(
+                comments,
+                AF,
+                word_list_pos,
+                word_list_neg)
+        )
 
         # implementation of emoticons
         S = emse.Emoticon_Sentiment("tests/samples/output.txt")
@@ -198,8 +201,8 @@ class Sentiment_analysis:
         else:
             emoticon_score = 1
 
-        return sentiment_score_mit, sentiment_score_afinn, world_list_positve, word_list_negative,\
-               comment_graph_list_mit, comment_graph_list_afinn, list_of_emoticons, emoticon_score
+        return sent_score_mit, sentiment_score_af, word_list_pos, word_list_neg,\
+               comment_graph_mit, comment_graph_af, list_of_emoticons, emoticon_score
 
     def normalize_data(self, list1, amount, normalization):
         """Tool to normalize the list of comments.

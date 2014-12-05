@@ -61,7 +61,8 @@ class Video:
         Sentiment_analysis().plot_of_comments(self.sentiment_values[4],
                                               self.sentiment_values[5],
                                               self.sentiment_values[6],
-                                              name_video=self.id)
+                                              name_video=self.id,
+                                              normalization=20)
 
     def get_youtube_information(self):
         """ Collect the youtube videos title and thumbnail."""
